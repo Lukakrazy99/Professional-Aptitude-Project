@@ -1,0 +1,54 @@
+﻿@model RegisterViewModel
+@{ ViewData["Title"] = "Register"; }
+<div class="row">
+	<div class="col-md-6">
+		<br />
+		<h2>Criar Conta</h2>
+		<br />
+		<div asp-validation-summary="ModelOnly"></div>
+		<form asp-action="register" asp-controller="account" method="post">
+			<input type="hidden" asp-for="ReturnUrl" />
+			<div class="form-group">
+				<label asp-for="UserName"></label>
+				<input asp-for="UserName" class="form-control" />
+				<span asp-validation-for="UserName"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Email"></label>
+				<input asp-for="Email" class="form-control" />
+				<span asp-validation-for="Email"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Password"></label>
+				<input asp-for="Password" class="form-control" type="password" placeholder="Password" id="pw" />
+				<span class="eye">
+					<i id="hide1" onclick="show()" class="fa fa-eye" style="position: absolute; top: -26px; right: -533px;"></i>
+					<i id="hide2" onclick="show()" class="fa fa-eye-slash" style="position: absolute; top: -26px; right: -533px;"></i>
+				</span>
+				<span asp-validation-for="Password"></span>
+			</div>
+			<button class="btn buy-now-btn">Registar</button>
+			<a asp-action="login" asp-route-returnUrl="@Model.ReturnUrl" class="float-right">Já tens conta? Entra Aqui!</a>
+		</form>
+	</div>
+</div>
+<script>
+	function show() {
+
+		var x = document.getElementById('pw');
+		var y = document.getElementById('hide1');
+		var z = document.getElementById('hide2');
+
+		if (x.type === "password") {
+			x.type = "text";
+			y.style.display = "block";
+			z.style.display = "none";
+		}
+		else {
+			var x = document.getElementById('pw');
+			x.type = "password";
+			y.style.display = "none";
+			z.style.display = "block";
+		}
+	}
+</script>

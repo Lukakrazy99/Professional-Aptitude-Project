@@ -1,0 +1,33 @@
+﻿<a class="nav-link dropdown-toggle aa" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   Bem vindo, @(User.Identity.Name ?? "User")!
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <a asp-action="login" asp-controller="account" class="dropdown-item">Iniciar Sessão</a>
+        <a asp-action="register" asp-controller="account" class="dropdown-item">Criar Conta</a>
+    }
+    else
+    {
+        <a asp-action="myOrder" asp-controller="order" class="dropdown-item">Encomendas</a>
+        <form method="post" asp-action="logout"  asp-controller="account" class="no-padding-margin dropdown-item">
+            <button class="btn dropdown-item btn-no-effect">Logout</button>
+        </form>
+
+        if (User.IsInRole("Admin"))
+        {
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-action="AllOrders" asp-controller="admin">Todas as Encomendas</a>
+            <a class="dropdown-item" asp-action="ManageJogos" asp-controller="admin">Gerir Jogos</a>
+            <a class="dropdown-item" asp-action="Index" asp-controller="role">Gerir Permissões</a>
+
+        }
+        else if (User.IsInRole("Colaborador"))
+        {
+            <div class="dropdown-divider"></div>
+			<a class="dropdown-item" asp-action="AllOrders" asp-controller="Colaborador">Todas as Encomendas</a>
+			<a class="dropdown-item" asp-action="ManageJogos" asp-controller="Colaborador">Gerir Jogos</a>
+        }
+
+    }
+</div>

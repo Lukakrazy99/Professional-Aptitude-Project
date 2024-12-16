@@ -1,0 +1,112 @@
+﻿@model JogoDetailsViewModel
+@{ ViewData["Title"] = "Details"; }
+<br />
+<h2>@Model.jogo.Nome</h2>
+<br />
+<div class="row">
+	<div class="col-md-6">
+		<img class="img-thumbnail" src="@Model.jogo.ImageUrl" alt="@Model.jogo.Nome" style="width: 60%;" />
+		<p></p>
+	</div>
+	<div class="col-md-6">
+		<h4>@Model.jogo.Nome</h4>
+		<p><i>@Model.jogo.Preco.ToString("c")</i></p>
+		<p>@Model.jogo.PDescricao</p>
+		<form asp-action="AddToShoppingCart"
+			  asp-controller="CarroCompras"
+			  asp-route-jogoId="@Model.jogo.Id_Jogo"
+			  method="post">
+			@if (!User.Identity.IsAuthenticated)
+			{
+
+			}
+			else
+			{
+<button class="btn btn-primary buy-now-btn">Comprar</button>			}
+		</form>
+
+	</div>
+</div>
+<div class="card-outline-secondary my-4">
+	<div class="card-header" style="
+    background-color: var(--color4) !important;
+    color: #fff;
+">
+		Comentários
+	</div>
+	<div class="card-body ">
+		
+
+			
+
+		
+		@if (Model.Review != null && Model.Review?.Count() > 0)
+		{
+			foreach (var review in Model.Review)
+			{
+				<div class="table-striped">
+	            <p>@review.Text</p>
+			<small class="">
+				Publicado por @review.User no dia @review.TimeStamp.ToString("dd/MM/yyyy")
+			</small>
+
+			<hr />
+				</div>
+			
+
+			}
+
+		}
+			else
+			{
+				<p>Não existe comentários para este jogo. Seja o primeiro!</p>
+
+				<hr/>
+			}
+
+
+
+		<form id="reviewForm">
+
+			<input type="hidden" name="JogoId" value="@Model.jogo.Id_Jogo" />
+
+			<div class="form-group ">
+				<label>O que achou do jogo?</label>
+				@if (!User.Identity.IsAuthenticated)
+				{
+					<textarea class="form-control" rows="3" name="Text" placeholder="Precisa de estar logado para realizar um comentário." readonly></textarea>
+					
+				}
+				else
+				{
+			        <textarea class="form-control" rows="3" name="Text" placeholder="Escreva aqui o seu comentário. " ></textarea>
+					<br />
+					<button class="btn btn-success" id="btnReview" type="button">Comentar</button>
+				}
+			</div>
+			
+		</form>
+
+
+	</div>
+</div>
+<script>
+    $("#btnReview").click(function (){
+        $.ajax({
+            url: "@Url.Action("LeaveReview", "Shared")",
+            type: "post",
+            data: $("#reviewForm").serialize()
+        }).done(function (response) {
+            debugger;
+            if (response.success) {
+                window.location.reload();
+            }
+            else {
+				swal("Error!", response.Message, "error");
+            }
+        }).fail(function () {
+			swal("Error!", "Error Occured. Please try again later", "error");
+        });
+        });
+
+</script>

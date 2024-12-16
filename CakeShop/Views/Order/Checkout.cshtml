@@ -1,0 +1,121 @@
+﻿@model MinhasVendasViewModel
+@{ ViewData["Title"] = "Checkout"; }
+<div class="row">
+
+	<div class="col-md-6 col-lg-6 offset-lg-3">
+		<br />
+		<h2>Compra</h2>
+	
+		<div>
+			<div asp-validation-summary="ModelOnly"></div>
+		</div>
+		<form asp-controller="order" asp-action="checkout" method="post">
+
+			<div class="form-group">
+				<label asp-for="vendadetalhes.PrimeiroNome"></label>
+				<input asp-for="vendadetalhes.PrimeiroNome" class="form-control" />
+				<span asp-validation-for="vendadetalhes.PrimeiroNome"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="vendadetalhes.Apelido"></label>
+				<input asp-for="vendadetalhes.Apelido" class="form-control" />
+				<span asp-validation-for="vendadetalhes.Apelido"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="vendadetalhes.Telemovel"></label>
+				<input asp-for="vendadetalhes.Telemovel" class="form-control" />
+				<span asp-validation-for="vendadetalhes.Telemovel"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="vendadetalhes.NIF"></label>
+				<input asp-for="vendadetalhes.NIF" class="form-control" />
+				<span asp-validation-for="vendadetalhes.NIF"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="vendadetalhes.Email"></label>
+				<input asp-for="vendadetalhes.Email" class="form-control" />
+				<span asp-validation-for="vendadetalhes.Email"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="vendadetalhes.Morada"></label>
+				<input asp-for="vendadetalhes.Morada" class="form-control" />
+				<span asp-validation-for="vendadetalhes.Morada"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="vendadetalhes.Cidade"></label>
+				<input asp-for="vendadetalhes.Cidade" class="form-control" />
+				<span asp-validation-for="vendadetalhes.Cidade"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="vendadetalhes.Pais"></label>
+				<input asp-for="vendadetalhes.Pais" class="form-control" />
+				<span asp-validation-for="vendadetalhes.Pais"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="vendadetalhes.CodPostal"></label>
+				<input asp-for="vendadetalhes.CodPostal" class="form-control" />
+				<span asp-validation-for="vendadetalhes.CodPostal"></span>
+			</div>
+
+			<button class="btn btn-primary buy-now-btn" id="selfclick" style="visibility:hidden;">Finalizar compra</button>
+
+			<div id="paypal-button-container"></div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+
+	<script src="https://www.paypal.com/sdk/js?client-id=AWYWB4yfAc-kJq9sVmQImO080o18WynXvivhemFM0_cGdiFYw_ucFbC9e2D4Ssw7mjDLrbivaopVlLt8&currency=EUR"></script>
+	<script>
+	var valors = @Model.TotalVenda;
+		function buttonclick() {
+			var pagebutton = document.getElementById("selfclick");
+			pagebutton.click();
+		}
+
+		$(document).ready(function () {
+			$('#fim').attr('disabled', 'disabled');
+		});
+
+		paypal.Buttons({
+
+			style: {
+				color: 'blue',
+				shape: 'pill',
+				label: 'pay',
+				height: 40
+			},
+			createOrder: function (data, actions) {
+				return actions.order.create({
+					purchase_units: [{
+						amount: {
+
+							value: valors
+					}
+					}]
+				});
+			},
+			onApprove: function (data, actions) {
+
+				return actions.order.capture().then(function (details) {
+					$('#fim').removeAttr('disabled');
+					$('#paypal-button-container').hide();
+					buttonclick()
+
+					//   console.log(details)
+					//   window.location.replace("https://localhost:5001/loja")
+
+
+				})
+			},
+			onCancel: function (data) {
+				window.location.replace("http://localhost:11912/order/checkout")
+			}
+		}).render('#paypal-button-container');
+	</script>
+
+}
+
+<br />
+<br />

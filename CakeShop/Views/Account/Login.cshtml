@@ -1,0 +1,54 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+<div class="row">
+	<div class="col-md-6">
+		<br />
+		<h2>Iniciar Sessão</h2>
+		<br />
+		<div asp-validation-summary="ModelOnly"></div>
+		<form asp-action="login" asp-controller="account" method="post">
+			<input type="hidden" asp-for="ReturnUrl" />
+			<div class="input-box">
+				<label asp-for="EmailOrUsername"></label>
+				<input asp-for="EmailOrUsername" class="form-control" />
+				<span asp-validation-for="EmailOrUsername"></span>
+			</div>
+			<div class="input-box">				
+				<label asp-for="Password"></label>
+				<input asp-for="Password" type="password" placeholder="Password" class="form-control" id="pw" />
+				<span class="eye">
+					<i id ="hide1" onclick="show()" class="fa fa-eye" style="position: absolute; top: -26px; right: -533px;"></i>
+					<i id ="hide2" onclick="show()" class="fa fa-eye-slash" style="position: absolute; top: -26px; right: -533px; "></i>
+				</span>
+				<span asp-validation-for="Password"></span>
+			</div>
+			<br />
+			<button class="btn buy-now-btn">Iniciar Sessão</button>
+			<a asp-action="register" asp-route-returnUrl="@Model.ReturnUrl" class="float-right">Ainda não tens conta? Cria Aqui!</a>
+		</form>
+	</div>
+</div>
+
+<script>
+	
+	function show() {
+	
+		var x = document.getElementById('pw');
+		var y = document.getElementById('hide1');
+		var z = document.getElementById('hide2');
+
+		if (x.type === "password") {
+			x.type = "text";
+			y.style.display = "block";
+			z.style.display = "none";
+		}
+		else {
+			var x = document.getElementById('pw');
+			x.type = "password";
+			y.style.display = "none";
+			z.style.display = "block";
+		}
+	}
+</script>

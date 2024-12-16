@@ -1,0 +1,56 @@
+﻿<link rel="stylesheet" type="text/css" href="~/css/Style1.css">
+@model JogoListViewModel
+<br/>
+@if (Model.Jogos?.Count() > 0)
+{
+
+<h1>@Model.CurrentPlataforma - @Model.CurrentCategory</h1>
+<br/>
+<div class=listbox>
+
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Aventura">Aventura</a>
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Casual">Casual</a>
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Combate">Combate</a>
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Corridas">Corridas</a>
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Desporto">Desporto</a>
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Indie">Indie</a>
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="MMO">MMO</a>
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="RPG">RPG</a>
+	<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Terror">Terror</a>
+
+
+</div>
+<br />
+<div class="row">
+
+	@foreach (var jogo in Model.Jogos)
+	{
+	@await Html.PartialAsync("JogoView", jogo);
+	}
+
+</div>
+
+}
+else
+{
+	
+	<h1>@Model.CurrentPlataforma - Jogos </h1>	
+	<br/>
+	<div class=listbox>
+
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Aventura">Aventura</a>
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Casual">Casual</a>
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Combate">Combate</a>
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Corridas">Corridas</a>
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Desporto">Desporto</a>
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Indie">Indie</a>
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="MMO">MMO</a>
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="RPG">RPG</a>
+		<a type="button" class="btn btn-primary btn-rounded" style=" background-color: #85a0bb;" asp-controller="/jogos" asp-action="ListXbox" asp-route-plataforma="Xbox" asp-route-categoria="Terror">Terror</a>
+
+	</div>
+<br />
+	<div class=center-2>
+	<p>Lamento! Ainda não existem jogos para a plataforma '@Model.CurrentPlataforma', mas em breve teremos! </p>
+	</div>
+}

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<MinhasVendasViewModel>
+
+@if (Model?.Count() <= 0)
+{
+    <div>
+        <p>Não existem pedidos no momento! </p>
+    </div>
+    return;
+}
+
+<table class="table text-center">
+    <thead>
+        <tr>
+			<th>Morada de Entrega</th>
+            <th>Sumário da compra</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #a3b8cc;">
+
+        @foreach (var order in Model)
+        {
+            <tr >
+
+                <td class="text-justify">
+                    <div>
+                        @order.vendadetalhes.PrimeiroNome @order.vendadetalhes.Apelido,
+                        @order.vendadetalhes.Morada
+                    </div>
+                    <div>
+                        @order.vendadetalhes.Cidade,
+                    </div>
+                    <div>
+                        @order.vendadetalhes.CodPostal
+                    </div>
+                    <div>@order.vendadetalhes.Telemovel</div>
+                    <div>@order.vendadetalhes.Email</div>
+                    <br />
+                    <div>
+                        @order.Data.Date.ToString("dd/MM/yyyy")
+                    </div>
+
+                </td>
+
+
+                <td>
+                    <table class="table">
+                        <tbody style="background-color: #a3b8cc;">
+                            @foreach (var item in order.InfosVendaJogo)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Nome
+                                    </td>
+                                    <td>
+                                        @item.Preco.ToString("c") * @item.Qnt
+
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+
+                    </table>
+                </td>
+                <td>
+                    @order.TotalVenda.ToString("c")
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>

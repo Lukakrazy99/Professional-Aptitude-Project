@@ -1,0 +1,79 @@
+﻿@model CarroComprasViewModel
+@{
+    ViewData["Title"] = "Cart";
+}
+<br />
+<h2>Carrinho <i class="fa fa-shopping-cart" aria-hidden="true"></i> </h2>
+<br />
+
+@if (Model.CarroCompras.CarroComprasItems?.Count() <= 0)
+{
+    
+    <h6>O teu carrinho está vazio de momento.</h6>
+    return;
+}
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Jogo</th>
+            <th>Qnt</th>
+            <th>Preco</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CarroCompras.CarroComprasItems)
+        {
+            <tr style="background-color: #a3b8cc;">
+                <td>@item.jogo.Nome</td>
+                <td>
+                    <form class="d-inline align-middle" asp-action="RemoveFromShoppingCart"
+                          asp-controller="CarroCompras"
+                          asp-route-jogoId="@item.JogoId"
+                          method="post">
+                    <button class="btn fa fa-minus fa-small" aria-hidden="true"></button>
+                    </form>
+                    <span style="padding:1px 10px">@item.Qnt</span>
+                    <form class="d-inline align-middle" asp-action="AddToShoppingCart"
+                          asp-controller="CarroCompras"
+                          asp-route-jogoId="@item.JogoId"
+                          method="post">
+                        <button class="btn fa fa-plus fa-small" aria-hidden="true"></button>
+                    </form>
+
+                </td>
+                <td>@item.jogo.Preco.ToString("c")</td>
+                <td>@((item.jogo.Preco * item.Qnt).ToString("c"))</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr style="background-color: #a3b8cc;">
+            <td colspan="3">Total: </td>
+            <td>@Model.CarroComprasTotal.ToString("c")</td>
+        </tr>
+        <tr style="border:0">
+            <td>
+                <form asp-action="RemoveAllCart" method="post">
+                    <button class="btn btn-link" style="color: #fff" asp-action="RemoveAllCart">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        Apagar o carrinho
+                    </button>
+                </form>
+
+            </td>
+            <td colspan="2"></td>
+            <td class="text-center">
+                <a class="btn buy-now-btn float-right" asp-action="checkout" asp-controller="order">
+                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                    Avançar com a compra
+                </a>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<script>
+    var total = @Model.CarroComprasTotal;
+</script>

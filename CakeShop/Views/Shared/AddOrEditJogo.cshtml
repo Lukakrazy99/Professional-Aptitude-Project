@@ -1,0 +1,67 @@
+﻿@model JogoCreateUpdateViewModel
+<div class="row">
+    <div class="col-md-6">
+		<form method="post">
+			<div asp-validation-summary="ModelOnly"></div>
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.Nome"></label>
+				<input asp-for="JogoDetalhes.Nome" class="form-control" />
+				<span asp-validation-for="JogoDetalhes.Nome"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.PlataformaId"></label>
+				<select class="custom-select" asp-for="JogoDetalhes.PlataformaId">
+					<option value=""></option>
+					@foreach (var categoria in Model.Plataformas)
+					{
+		<option value="@categoria.Id_Plataforma">@categoria.Nome</option>}
+				</select>
+				<span asp-validation-for="JogoDetalhes.PlataformaId"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.CategoriaId"></label>
+				<select class="custom-select" asp-for="JogoDetalhes.CategoriaId">
+					<option value=""></option>
+					@foreach (var categoria in Model.Categorias)
+					{
+		<option value="@categoria.Id_Categoria">@categoria.Nome</option>}
+				</select>
+				<span asp-validation-for="JogoDetalhes.CategoriaId"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.Quantidade"></label>
+				<input asp-for="JogoDetalhes.Quantidade" class="form-control" />
+				<span asp-validation-for="JogoDetalhes.Quantidade"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.Qualidade"></label>
+				<input asp-for="JogoDetalhes.Qualidade" class="form-control" />
+				<span asp-validation-for="JogoDetalhes.Qualidade"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.PDescricao"></label>
+				<textarea asp-for="JogoDetalhes.PDescricao" class="form-control"></textarea>
+				<span asp-validation-for="JogoDetalhes.PDescricao"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.Especificacoes"></label>
+				<textarea asp-for="JogoDetalhes.Especificacoes" class="form-control"></textarea>
+				<span asp-validation-for="JogoDetalhes.Especificacoes"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.Preco"></label>
+				<input asp-for="JogoDetalhes.Preco" class="form-control" />
+				<span asp-validation-for="JogoDetalhes.Preco"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="JogoDetalhes.ImageUrl"></label>
+				<input asp-for="JogoDetalhes.ImageUrl" class="form-control" />
+				<span asp-validation-for="JogoDetalhes.ImageUrl"></span>
+			</div>
+			<div class="form-group">
+				<button class="btn buy-now-btn">Save</button>
+			</div>
+		</form>
+    </div>
+</div>

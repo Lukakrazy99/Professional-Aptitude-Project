@@ -1,0 +1,58 @@
+﻿@model IEnumerable<NomeJogoIdDetalhes>
+@{
+    ViewData["Title"] = "ManageJogo";
+}
+<br />
+<h2>Gerir Jogos</h2>
+<br />
+
+<br />
+<table class="table ">
+    <thead>
+        <tr>
+            <th>Nome Jogo</th>
+			<th>
+				<div>
+					<a asp-action="AddJogo" class="btn float-right" style="color: #fff;">Adicionar um novo jogo</a>
+				</div>
+			</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jogo in Model)
+        {
+            <tr id="jogo-@jogo.Id" style="background-color: #a3b8cc;">
+                <td>@jogo.Nome</td>
+                <td class="float-right">
+                    <a class="btn btn-link btn-no-effect" style="color: #fff;" asp-action="EditJogo" asp-route-id="@jogo.Id">Editar </a>
+                    |
+                    <button class="btn btn-link btn-no-effect deleteBtn" style="color: #fff;" data-id="@jogo.Id">Apagar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+
+        $(".deleteBtn").click((e) => {
+            const id = $(e.target).data("id");
+            if (!confirm("Tem a certeza que pretende apagar?"))
+                return;
+
+            $.ajax({
+				url: '/admin/manageJogos/' + id,
+                type: 'DELETE',
+                success: () => {
+                    const target = $("#jogo-" + id);
+                    $(target).fadeOut(500, () => $(target).remove());
+                },
+                error: (e) => {
+                    alert("Something Went Wrong", e);
+                }
+            });
+        });
+
+    </script>
+}
